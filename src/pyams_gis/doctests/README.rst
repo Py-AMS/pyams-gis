@@ -353,7 +353,7 @@ GIS schema fields widgets
     >>> area_widget = form.widgets['area']
     >>> print(area_widget.render())
     <div class="object-field"
-         data-ams-modules='{"gis": "/--static--/pyams_gis/:version:2024-10-18T08:05:14.43/js/pyams_gis.js"}'>
+         data-ams-modules='{"gis": "/--static--/pyams_gis/:version:.../js/pyams_gis.js"}'>
         <div class="position-absolute t-m3 t-md-3 r-3 r-md-5">
             <div class="d-flex flex-row flex-md-column mb-2">
                 <div class="btn btn-light my-1"
