@@ -1,0 +1,3 @@
+[run]
+source = src/pyams_gis
+omit = src/pyams_gis/tests/*
