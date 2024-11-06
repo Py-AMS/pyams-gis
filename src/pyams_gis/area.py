@@ -14,18 +14,13 @@
 
 """
 
-try:
-    from osgeo.osr import SpatialReference, CoordinateTransformation
-    have_gdal = True
-except ImportError:
-    have_gdal = False
-
 from decimal import Decimal
 
 from persistent import Persistent
 from zope.schema.fieldproperty import FieldProperty
 
 from pyams_gis.interfaces import CRS, IGeoArea
+from pyams_gis.transform import transform
 from pyams_utils.factory import factory_config
 from pyams_utils.list import is_not_none
 
@@ -56,20 +51,23 @@ class GeoArea(Persistent):
             self.projection = kwargs['projection']
 
     def __bool__(self):
-        return len(tuple(map(is_not_none, (self.x1, self.y1, self.x2, self.y2)))) == 4
+        return len(tuple(filter(is_not_none, (self.x1, self.y1, self.x2, self.y2)))) == 4
 
     def get_coordinates(self, projection=CRS.WGS84.value):
         if projection == self.projection:
             return (self.x1, self.y1), (self.x2, self.y2)
-        if (not have_gdal) or not self:
-            return None, None
-        source = SpatialReference()
-        source.ImportFromEPSG(self.projection)
-        destination = SpatialReference()
-        destination.ImportFromEPSG(projection)
-        transformation = CoordinateTransformation(source, destination)
-        return transformation.TransformPoint(float(self.x1), float(self.y1))[0:2], \
-               transformation.TransformPoint(float(self.x2), float(self.y2))[0:2]
+        point1 = transform({
+            'longitude': float(self.x1),
+            'latitude': float(self.y1)
+        }, self.projection, projection).get('point')
+        point2 = transform({
+            'longitude': float(self.x2),
+            'latitude': float(self.y2)
+        }, self.projection, projection).get('point')
+        return (
+            (point1['longitude'], point1['latitude']),
+            (point2['longitude'], point2['latitude'])
+        )
 
     @property
     def wgs_coordinates(self):

@@ -104,14 +104,14 @@ def transform_area(request):
             'srid': to_srid
         })
         return result
-    point1 = transform((area['x1'], area['y1']), from_srid, to_srid)
-    point2 = transform((area['x2'], area['y2']), from_srid, to_srid)
+    point1 = transform((area['x1'], area['y1']), from_srid, to_srid).get('point')
+    point2 = transform((area['x2'], area['y2']), from_srid, to_srid).get('point')
     result.update({
         'area': {
-            'x1': point1['point']['longitude'],
-            'y1': point1['point']['latitude'],
-            'x2': point2['point']['longitude'],
-            'y2': point2['point']['latitude']
+            'x1': point1['longitude'],
+            'y1': point1['latitude'],
+            'x2': point2['longitude'],
+            'y2': point2['latitude']
         },
         'srid': to_srid
     })

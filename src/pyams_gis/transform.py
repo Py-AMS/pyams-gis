@@ -10,16 +10,16 @@
 # FOR A PARTICULAR PURPOSE.
 #
 
-"""PyAMS_*** module
+"""PyAMS_gis.transform module
 
+This module provides a single function which is used to convert coordinates
+from one SRID to another one.
 """
 
 __docformat__ = 'restructuredtext'
 
-from decimal import Decimal
-
 try:
-    from osgeo.osr import SpatialReference, CoordinateTransformation
+    from osgeo.osr import CoordinateTransformation, OAMS_TRADITIONAL_GIS_ORDER, SpatialReference
     have_gdal = True
 except ImportError:
     have_gdal = False
@@ -53,8 +53,10 @@ def transform(point, from_srid, to_srid):
             'srid': from_srid
         }
     source = SpatialReference()
+    source.SetAxisMappingStrategy(OAMS_TRADITIONAL_GIS_ORDER)
     source.ImportFromEPSG(from_srid)
     destination = SpatialReference()
+    destination.SetAxisMappingStrategy(OAMS_TRADITIONAL_GIS_ORDER)
     destination.ImportFromEPSG(to_srid)
     transformed = CoordinateTransformation(source, destination).TransformPoint(longitude, latitude)
     return {

@@ -14,18 +14,13 @@
 
 """
 
-try:
-    from osgeo.osr import SpatialReference, CoordinateTransformation
-    have_gdal = True
-except ImportError:
-    have_gdal = False
-
 from decimal import Decimal
 
 from persistent import Persistent
 from zope.schema.fieldproperty import FieldProperty
 
 from pyams_gis.interfaces import CRS, IGeoPoint, IGeoPointZ
+from pyams_gis.transform import transform
 from pyams_utils.factory import factory_config
 from pyams_utils.list import is_not_none
 
@@ -50,19 +45,16 @@ class GeoPoint(Persistent):
             self.projection = kwargs['projection']
 
     def __bool__(self):
-        return len(tuple(map(is_not_none, (self.longitude, self.latitude)))) == 2
+        return len(tuple(filter(is_not_none, (self.longitude, self.latitude)))) == 2
 
     def get_coordinates(self, projection=CRS.WGS84.value):
+        source = {
+            'longitude': self.longitude,
+            'latitude': self.latitude
+        }
         if projection == self.projection:
-            return self.longitude, self.latitude
-        if (not have_gdal) or not self:
-            return None, None
-        source = SpatialReference()
-        source.ImportFromEPSG(self.projection)
-        destination = SpatialReference()
-        destination.ImportFromEPSG(projection)
-        transformation = CoordinateTransformation(source, destination)
-        return transformation.TransformPoint(float(self.longitude), float(self.latitude))[0:2]
+            return source
+        return transform(source, self.projection, projection).get('point')
 
     @property
     def wgs_coordinates(self):
