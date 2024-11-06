@@ -16,7 +16,7 @@ from zope.interface import Interface, alsoProvides, implementer_only
 from pyams_form.browser.object import ObjectWidget
 from pyams_form.interfaces import IObjectFactory
 from pyams_form.interfaces.form import IForm
-from pyams_form.interfaces.widget import IFieldWidget
+from pyams_form.interfaces.widget import IFieldWidget, IObjectWidget
 from pyams_form.widget import FieldWidget
 from pyams_gis.interfaces import IGeoArea
 from pyams_gis.interfaces.widget import IGeoAreaWidget
@@ -33,6 +33,9 @@ from pyams_utils.interfaces.data import IObjectData
 
 @adapter_config(name=get_interface_name(IGeoArea),
                 required=(Interface, IFormLayer, IForm, IGeoAreaWidget),
+                provides=IObjectFactory)
+@adapter_config(name=get_interface_name(IGeoArea),
+                required=(Interface, IFormLayer, IObjectWidget, IGeoAreaWidget),
                 provides=IObjectFactory)
 def geo_area_object_widget_factory(*args):  # pylint: disable=unused-argument
     """GeoArea object factory"""
