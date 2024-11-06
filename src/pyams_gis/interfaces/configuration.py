@@ -44,6 +44,12 @@ class IMapConfiguration(Interface):
                   value_type=Choice(vocabulary=PYAMS_GIS_LAYERS_VOCABULARY),
                   required=False)
 
+    hidden_layers = List(title=_("Hidden layers list"),
+                         description=_("This list includes layers which are hidden by default, but "
+                                       "which can be switched using the layers selector"),
+                         value_type=Choice(vocabulary=PYAMS_GIS_LAYERS_VOCABULARY),
+                         required=False)
+
     auto_adjust = Bool(title=_("Adjust bounds to markers layer"),
                        description=_("If 'yes', map area will be automatically adjusted "
                                      "to markers layer(s), if any"),

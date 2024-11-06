@@ -27,6 +27,7 @@ class MapConfiguration(Persistent, Contained):
 
     crs = FieldProperty(IMapConfiguration['crs'])
     layers = FieldProperty(IMapConfiguration['layers'])
+    hidden_layers = FieldProperty(IMapConfiguration['hidden_layers'])
     auto_adjust = FieldProperty(IMapConfiguration['auto_adjust'])
     zoom_level = FieldProperty(IMapConfiguration['zoom_level'])
     initial_center = FieldProperty(IMapConfiguration['initial_center'])
@@ -54,17 +55,17 @@ class MapConfiguration(Persistent, Contained):
         if self.initial_center:
             gps_location = self.initial_center.wgs_coordinates
             result['center'] = {
-                'lat': float(gps_location[1]),
-                'lon': float(gps_location[0])
+                'lon': float(gps_location['longitude']),
+                'lat': float(gps_location['latitude'])
             }
         elif self.initial_bounds:
             point1, point2 = self.initial_bounds.wgs_coordinates
             result['bounds'] = [{
-                'lat': float(point1[1]),
-                'lon': float(point1[0])
+                'lon': float(point1[0]),
+                'lat': float(point1[1])
             }, {
-                'lat': float(point2[1]),
-                'lon': float(point2[0])
+                'lon': float(point2[0]),
+                'lat': float(point2[1])
             }]
         else:
             # Near center default location
@@ -72,14 +73,23 @@ class MapConfiguration(Persistent, Contained):
                 'lat': 45,
                 'lon': 5.0
             }
+        manager = get_utility(IMapManager)
+        layers = []
         if self.layers:
-            manager = get_utility(IMapManager)
-            layers = []
             for name in self.layers:
                 layer = manager.get(name)
                 if layer is not None:
-                    layers.append(layer.get_configuration())
-            result['layers'] = layers
+                    configuration = layer.get_configuration()
+                    configuration['isVisible'] = True
+                    layers.append(configuration)
+        if self.hidden_layers:
+            for name in self.hidden_layers:
+                layer = manager.get(name)
+                if layer is not None:
+                    configuration = layer.get_configuration()
+                    configuration['isVisible'] = False
+                    layers.append(configuration)
+        result['layers'] = layers
         return result
 
 
