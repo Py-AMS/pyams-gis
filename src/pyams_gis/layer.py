@@ -66,6 +66,7 @@ class MapLayer(Persistent, Contained):
     title = FieldProperty(IMapLayer['title'])
     min_zoom = FieldProperty(IMapLayer['min_zoom'])
     max_zoom = FieldProperty(IMapLayer['max_zoom'])
+    is_overlay = FieldProperty(IMapLayer['is_overlay'])
 
     def get_configuration(self):
         """Get configuration mapping"""
@@ -76,6 +77,7 @@ class MapLayer(Persistent, Contained):
         update_dict(result, 'factory', self.factory)
         update_dict(result, 'minZoom', self.min_zoom)
         update_dict(result, 'maxZoom', self.max_zoom)
+        update_dict(result, 'isOverlay', self.is_overlay)
         if self.depends:
             depends = {}
             for name, resource in self.depends.items():

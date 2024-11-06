@@ -64,6 +64,13 @@ class IMapLayer(IContained, IAttributeAnnotatable):
                    default=18,
                    required=True)
 
+    is_overlay = Bool(title=_("Overlay layer?"),
+                      description=_("Unlike base layers for which a single layer is visible at "
+                                    "a given time, overlay layers are used to display multiple "
+                                    "information on top a selected base layer"),
+                      required=True,
+                      default=False)
+
     def get_configuration(self):
         """Get layer configuration mapping"""
 
