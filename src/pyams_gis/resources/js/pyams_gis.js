@@ -17,7 +17,7 @@ const GIS = {
 
 	_layersControlAddItem: function(obj) {
 		const
-			group = $('<div></div>').addClass('inline-group'),
+			group = $('<div></div>').addClass('inline-group my-2'),
 			label = $('<label></label>').addClass(obj.overlay ? "checkbox" : "radio"),
 			span = $('<i></i>'),
 			checked = this._map.hasLayer(obj.layer);
@@ -30,6 +30,7 @@ const GIS = {
 		} else {
 			input = this._createRadioElement('leaflet-base-layers', checked);
 		}
+		this._layerControlInputs.push(input);
 		input.layerId = L.stamp(obj.layer);
 		$(input).addClass(obj.overlay ? "checkbox" : "radio");
 		GIS.L.DomEvent.on(input, 'click', this._onInputClick, this);
@@ -39,7 +40,7 @@ const GIS = {
 		label.append(name);
 		group.append(label);
 		const container = obj.overlay ? this._overlaysList : this._baseLayersList;
-		$(container).append(group);
+		$(container).addClass('ams-form').append(group);
 		return group;
 	},
 
@@ -101,10 +102,10 @@ const GIS = {
 							const
 								leafmap = L.map(map.attr('id'), settings),
 								layersConfig = [],
-								layersControl = {};
+								baseLayers = {},
+								overlayLayers = {};
 							if (config.layers) {
-								for (let idx = 0; idx < config.layers.length; idx++) {
-									const layerConfig = config.layers[idx];
+								for (const layerConfig of config.layers) {
 									map.trigger('map.layer.init', [map, layerConfig]);
 									layersConfig.push(GIS.getLayer(map, leafmap, layerConfig));
 								}
@@ -117,17 +118,25 @@ const GIS = {
 								}));
 							}
 							$.when.apply($, layersConfig).then((...layers) => {
-								for (let idx = 0; idx < layers.length; idx++) {
-									layers[idx].addTo(leafmap);
+								for (const [idx, layer] of Object.entries(layers)) {
 									if (config.layers) {
-										layersControl[config.layers[idx].title] = layers[idx];
+										if (config.layers[idx].isVisible) {
+											layer.addTo(leafmap);
+										}
+										if (config.layers[idx].isOverlay) {
+											overlayLayers[config.layers[idx].title] = layer;
+										} else {
+											baseLayers[config.layers[idx].title] = layer;
+										}
+									} else {
+										layer.addTo(leafmap);
 									}
 								}
 								if (config.zoomControl && (data.mapLeafletHideZoomControl !== true)) {
 									L.control.scale().addTo(leafmap);
 								}
 								if (config.layerControl) {
-									L.control.layers({}, layersControl).addTo(leafmap);
+									L.control.layers(baseLayers, overlayLayers).addTo(leafmap);
 								}
 								if (config.center) {
 									leafmap.setView(new L.LatLng(config.center.lat, config.center.lon),
@@ -532,32 +541,38 @@ const GIS = {
 			}
 		},
 
+		last_event: null,
+
 		onClick: (event) => {
-			const
-				map = event.target.getContainer(),
-				data = $(map).data(),
-				marker = data.marker,
-				latlng = event.latlng;
-			marker.setLatLng(latlng);
-			const
-				fieldname = data.mapLeafletFieldname,
-				projection = $(`select[name="${fieldname}.widgets.projection"]`),
-				params = {
-					point: {
-						longitude: latlng.lng,
-						latitude: latlng.lat
-					},
-					from_srid: GIS.WGS_SRID,
-					to_srid: projection.val()
-				};
-			GIS.call('transform/point', params).then((result) => {
-				if (result.status === 'success') {
-					const point = result.point;
-					$(`input[name="${fieldname}.widgets.longitude"]`).val(point.longitude);
-					$(`input[name="${fieldname}.widgets.latitude"]`).val(point.latitude);
-					$(map).trigger('marker.changed', [map, point]);
+			GIS.position.last_event = event;
+			setTimeout(() => {
+				if (event === GIS.position.last_event) {
+					const
+						map = event.target.getContainer(),
+						data = $(map).data(),
+						marker = data.marker,
+						latlng = event.latlng,
+						fieldname = data.mapLeafletFieldname,
+						projection = $(`select[name="${fieldname}.widgets.projection"]`),
+						params = {
+							point: {
+								longitude: latlng.lng,
+								latitude: latlng.lat
+							},
+							from_srid: GIS.WGS_SRID,
+							to_srid: parseInt(projection.val())
+						};
+					GIS.call('transform/point', params).then((result) => {
+						if (result.status === 'success') {
+							const point = result.point;
+							$(`input[name="${fieldname}.widgets.longitude"]`).val(point.longitude);
+							$(`input[name="${fieldname}.widgets.latitude"]`).val(point.latitude);
+							$(map).trigger('marker.changed', [map, point]);
+						}
+						marker.setLatLng(latlng);
+					});
 				}
-			});
+			}, 100);
 		},
 
 		/**
@@ -574,7 +589,7 @@ const GIS = {
 		changedProjection: (event)=> {
 			const
 				select = $(event.currentTarget),
-				map = $('.map', select.parents('fieldset:first')),
+				map = $('.map', select.parents('.object-field:first')),
 				fieldname = map.data('map-leaflet-fieldname'),
 				longitude = $(`input[name="${fieldname}.widgets.longitude"]`),
 				latitude = $(`input[name="${fieldname}.widgets.latitude"]`),
@@ -587,8 +602,8 @@ const GIS = {
 							longitude: parseFloat(longitude.val()),
 							latitude: parseFloat(latitude.val())
 						},
-						from_srid: oldValue,
-						to_srid: newValue
+						from_srid: parseInt(oldValue),
+						to_srid: parseInt(newValue)
 					};
 					GIS.call('transform/point', params).then((result) => {
 						if (result.status === 'success') {
@@ -691,9 +706,6 @@ const GIS = {
 								leafmap.on(L.Draw.Event.EDITMOVE, GIS.area.changedArea);
 								leafmap.on(L.Draw.Event.EDITRESIZE, GIS.area.changedArea);
 								leafmap.on(L.Draw.Event.EDITVERTEX, GIS.area.changedArea);
-								// setTimeout(() => {
-								// 	leafmap.fitBounds(rectangle.getBounds());
-								// }, 50);
 							}
 
 							const
@@ -745,14 +757,16 @@ const GIS = {
 		},
 
 		setBounds: (event) => {
-			const
-				map = $('.map', event.currentTarget),
-				leafmap = map.data('leafmap'),
-				rectangle = map.data('area');
-			if (leafmap) {
-				leafmap.invalidateSize();
-				leafmap.fitBounds(rectangle.getBounds());
-			}
+			setTimeout(() => {
+				const
+					map = $('.map', event.target),
+					leafmap = map.data('leafmap'),
+					rectangle = map.data('area');
+				if (leafmap) {
+					leafmap.invalidateSize();
+					leafmap.fitBounds(rectangle.getBounds());
+				}
+			}, 500);
 		},
 
 		last_event: null,
@@ -766,7 +780,7 @@ const GIS = {
 						data = $(map).data(),
 						area = data.area.getBounds(),
 						fieldname = data.mapLeafletFieldname,
-						projection = $(`select[name="${fieldname}.widgets.projection"]`).val(),
+						projection = $(`select[name="${fieldname}.widgets.projection"]`),
 						params = {
 							area: {
 								x1: area.getWest(),
@@ -775,7 +789,7 @@ const GIS = {
 								y2: area.getNorth()
 							},
 							from_srid: GIS.WGS_SRID,
-							to_srid: projection
+							to_srid: parseInt(projection.val())
 						};
 					GIS.call('transform/area', params).then((result) => {
 						if (result.status === 'success') {
@@ -801,7 +815,7 @@ const GIS = {
 		changedProjection: (event)=> {
 			const
 				select = $(event.currentTarget),
-				map = $('.map', select.parents('fieldset:first')),
+				map = $('.map', select.parents('.object-field:first')),
 				fieldname = map.data('map-leaflet-fieldname'),
 				x1 = $(`input[name="${fieldname}.widgets.x1"]`),
 				y1 = $(`input[name="${fieldname}.widgets.y1"]`),
@@ -818,8 +832,8 @@ const GIS = {
 							x2: parseFloat(x2.val()),
 							y2: parseFloat(y2.val())
 						},
-						from_srid: oldValue,
-						to_srid: newValue
+						from_srid: parseInt(oldValue),
+						to_srid: parseInt(newValue)
 					};
 					GIS.call('transform/area', params).then((result) => {
 						if (result.status === 'success') {
