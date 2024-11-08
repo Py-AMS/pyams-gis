@@ -210,8 +210,48 @@ Let's add a layer to this default configuration:
                  'maxZoom': 18,
                  'name': 'wms',
                  'title': 'WMS',
-                 'url': 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                 'url': 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
                  'version': '1.1.1'}],
+     'scrollWheelZoom': False,
+     'zoom': 11,
+     'zoomControl': True}
+
+We can add another invisible overlay:
+
+    >>> from pyams_gis.layer import GoogleMapLayer
+
+    >>> layer = GoogleMapLayer()
+    >>> layer.name = 'gml'
+    >>> layer.title = {'en': 'GML'}
+    >>> layer.is_overlay = True
+
+    >>> manager[layer.name] = layer
+
+    >>> configuration.hidden_layers = ['gml']
+    >>> pprint(configuration.get_configuration())
+    {'adjust': 'auto',
+     'attributionControl': True,
+     'center': {'lat': 45, 'lon': 5.0},
+     'crs': 'L.CRS.EPSG3857',
+     'fullscreenControl': False,
+     'keyboard': True,
+     'layerControl': False,
+     'layers': [{'factory': 'MyAMS.gis.factory.WMS',
+                 'format': 'image/png',
+                 'isVisible': True,
+                 'maxZoom': 18,
+                 'name': 'wms',
+                 'title': 'WMS',
+                 'url': 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                 'version': '1.1.1'},
+                {'dependsOn': {'L.gridLayer.googleMutant': '/--static--/pyams_gis/:version:.../js/Leaflet.GoogleMutant.js'},
+                 'factory': 'MyAMS.gis.factory.Google',
+                 'isOverlay': True,
+                 'isVisible': False,
+                 'maxZoom': 18,
+                 'name': 'gml',
+                 'title': 'GML',
+                 'type': 'roadmap'}],
      'scrollWheelZoom': False,
      'zoom': 11,
      'zoomControl': True}
