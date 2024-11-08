@@ -110,11 +110,11 @@ const GIS = {
 									layersConfig.push(GIS.getLayer(map, leafmap, layerConfig));
 								}
 							} else {
-								layersConfig.push(L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+								layersConfig.push(L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 									name: 'osm',
 									title: 'OpenStreetMap',
 									maxZoom: 19,
-									attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+									attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 								}));
 							}
 							$.when.apply($, layersConfig).then((...layers) => {

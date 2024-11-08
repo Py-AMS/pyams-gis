@@ -104,7 +104,7 @@ class ITileMapLayer(IBaseTileMapLayer):
 
     url = TextLine(title=_("URL template"),
                    description=_("URL template used to get layer tiles (see leaflet.js docs)"),
-                   default='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                   default='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
                    required=True)
 
 
