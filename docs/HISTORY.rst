@@ -1,6 +1,13 @@
 Changelog
 =========
 
+2.1.0
+-----
+ - added support for overlay vs base layers
+ - added support for hidden layers
+ - updated coordinates transformation API
+ - updated Gitlab CI configuration
+
 2.0.2
 -----
  - corrected doctest and Gitlab-CI configuration

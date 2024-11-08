@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE 1.0\n"
-"POT-Creation-Date: 2024-10-13 14:26+0200\n"
+"POT-Creation-Date: 2024-11-06 15:08+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,27 +16,27 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Lingua 4.15.0\n"
 
-#: ./src/pyams_gis/layer.py:91
+#: ./src/pyams_gis/layer.py:93
 msgid "GeoJSON"
 msgstr ""
 
-#: ./src/pyams_gis/layer.py:130
+#: ./src/pyams_gis/layer.py:132
 msgid "Tile layer"
 msgstr ""
 
-#: ./src/pyams_gis/layer.py:146
+#: ./src/pyams_gis/layer.py:148
 msgid "WMS layer"
 msgstr ""
 
-#: ./src/pyams_gis/layer.py:177
+#: ./src/pyams_gis/layer.py:179
 msgid "GeoPortal layer"
 msgstr ""
 
-#: ./src/pyams_gis/layer.py:200
+#: ./src/pyams_gis/layer.py:202
 msgid "ESRI features layer"
 msgstr ""
 
-#: ./src/pyams_gis/layer.py:223
+#: ./src/pyams_gis/layer.py:225
 msgid "Google Maps layer"
 msgstr ""
 
@@ -155,169 +155,180 @@ msgstr ""
 msgid "Maximum zoom level at which layer is displayed"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/layer.py:74
-#: ./src/pyams_gis/interfaces/layer.py:165
+#: ./src/pyams_gis/interfaces/layer.py:67
+msgid "Overlay layer?"
+msgstr ""
+
+#: ./src/pyams_gis/interfaces/layer.py:68
+msgid ""
+"Unlike base layers for which a single layer is visible at a given time, "
+"overlay layers are used to display multiple information on top a selected "
+"base layer"
+msgstr ""
+
+#: ./src/pyams_gis/interfaces/layer.py:81
+#: ./src/pyams_gis/interfaces/layer.py:172
 msgid "Layer URL"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/layer.py:75
+#: ./src/pyams_gis/interfaces/layer.py:82
 msgid "URL used to get access to JSON data"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/layer.py:78
+#: ./src/pyams_gis/interfaces/layer.py:85
 msgid "Layer style"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/layer.py:79
+#: ./src/pyams_gis/interfaces/layer.py:86
 msgid "Layer style, provided in Leaflet JSON format"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/layer.py:86
+#: ./src/pyams_gis/interfaces/layer.py:93
 msgid "Layer attribution"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/layer.py:87
+#: ./src/pyams_gis/interfaces/layer.py:94
 msgid "String used by the attribution control"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/layer.py:90
+#: ./src/pyams_gis/interfaces/layer.py:97
 msgid "Layer bounds"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/layer.py:91
+#: ./src/pyams_gis/interfaces/layer.py:98
 msgid "Geographical bounds into which layer tiles are displayed"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/layer.py:98
+#: ./src/pyams_gis/interfaces/layer.py:105
 msgid "URL template"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/layer.py:99
+#: ./src/pyams_gis/interfaces/layer.py:106
 msgid "URL template used to get layer tiles (see leaflet.js docs)"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/layer.py:107
-#: ./src/pyams_gis/interfaces/layer.py:152
+#: ./src/pyams_gis/interfaces/layer.py:114
+#: ./src/pyams_gis/interfaces/layer.py:159
 #: ./src/pyams_gis/interfaces/configuration.py:36
 msgid "CRS"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/layer.py:108
-#: ./src/pyams_gis/interfaces/layer.py:153
+#: ./src/pyams_gis/interfaces/layer.py:115
+#: ./src/pyams_gis/interfaces/layer.py:160
 msgid ""
 "Coordinates reference system to use for map requests; defaults to map request"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/layer.py:112
+#: ./src/pyams_gis/interfaces/layer.py:119
 msgid "Layers"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/layer.py:113
+#: ./src/pyams_gis/interfaces/layer.py:120
 msgid "Comma-separated list of WMS layers to show"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/layer.py:116
+#: ./src/pyams_gis/interfaces/layer.py:123
 msgid "Styles"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/layer.py:117
+#: ./src/pyams_gis/interfaces/layer.py:124
 msgid "Comma-separated list of WMS styles"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/layer.py:120
+#: ./src/pyams_gis/interfaces/layer.py:127
 msgid "Layer format"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/layer.py:121
+#: ./src/pyams_gis/interfaces/layer.py:128
 msgid "WMS image format; use 'image/png' for layers with transparency"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/layer.py:125
+#: ./src/pyams_gis/interfaces/layer.py:132
 msgid "Transparent?"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/layer.py:126
+#: ./src/pyams_gis/interfaces/layer.py:133
 msgid "If 'yes', the WMS services will return images with transparency"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/layer.py:130
+#: ./src/pyams_gis/interfaces/layer.py:137
 msgid "Version"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/layer.py:131
+#: ./src/pyams_gis/interfaces/layer.py:138
 msgid "Version of the WMS service to use"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/layer.py:135
+#: ./src/pyams_gis/interfaces/layer.py:142
 msgid "Uppercase?"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/layer.py:136
+#: ./src/pyams_gis/interfaces/layer.py:143
 msgid "If 'yes', WMS request parameters keys will be uppercase"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/layer.py:144
-#: ./src/pyams_gis/interfaces/layer.py:193
+#: ./src/pyams_gis/interfaces/layer.py:151
+#: ./src/pyams_gis/interfaces/layer.py:200
 msgid "API key"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/layer.py:145
+#: ./src/pyams_gis/interfaces/layer.py:152
 msgid "Key used to access layer data"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/layer.py:148
+#: ./src/pyams_gis/interfaces/layer.py:155
 msgid "IGN layer name"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/layer.py:149
+#: ./src/pyams_gis/interfaces/layer.py:156
 msgid "Name of layer in IGN format"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/layer.py:166
+#: ./src/pyams_gis/interfaces/layer.py:173
 msgid "URL used to get the feature layer"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/layer.py:169
+#: ./src/pyams_gis/interfaces/layer.py:176
 msgid "Token"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/layer.py:170
+#: ./src/pyams_gis/interfaces/layer.py:177
 msgid "Token used in all service requests"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/layer.py:173
+#: ./src/pyams_gis/interfaces/layer.py:180
 msgid "Where condition"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/layer.py:174
+#: ./src/pyams_gis/interfaces/layer.py:181
 msgid "Optional expression used to filter features"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/layer.py:178
+#: ./src/pyams_gis/interfaces/layer.py:185
 msgid "Roads map"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/layer.py:179
+#: ./src/pyams_gis/interfaces/layer.py:186
 msgid "Satellite"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/layer.py:180
+#: ./src/pyams_gis/interfaces/layer.py:187
 msgid "Hybrid"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/layer.py:181
+#: ./src/pyams_gis/interfaces/layer.py:188
 msgid "Terrain"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/layer.py:194
+#: ./src/pyams_gis/interfaces/layer.py:201
 msgid "Google API key used to access maps data"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/layer.py:197
+#: ./src/pyams_gis/interfaces/layer.py:204
 msgid "Map type"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/layer.py:198
+#: ./src/pyams_gis/interfaces/layer.py:205
 msgid "Type of GoogleMaps layer type"
 msgstr ""
 
@@ -334,88 +345,98 @@ msgid "List of available layers displayed into this map"
 msgstr ""
 
 #: ./src/pyams_gis/interfaces/configuration.py:47
-msgid "Adjust bounds to markers layer"
+msgid "Hidden layers list"
 msgstr ""
 
 #: ./src/pyams_gis/interfaces/configuration.py:48
 msgid ""
-"If 'yes', map area will be automatically adjusted to markers layer(s), if any"
+"This list includes layers which are hidden by default, but which can be "
+"switched using the layers selector"
 msgstr ""
 
 #: ./src/pyams_gis/interfaces/configuration.py:53
-msgid "Initial zoom level"
+msgid "Adjust bounds to markers layer"
 msgstr ""
 
 #: ./src/pyams_gis/interfaces/configuration.py:54
+msgid ""
+"If 'yes', map area will be automatically adjusted to markers layer(s), if any"
+msgstr ""
+
+#: ./src/pyams_gis/interfaces/configuration.py:59
+msgid "Initial zoom level"
+msgstr ""
+
+#: ./src/pyams_gis/interfaces/configuration.py:60
 msgid ""
 "Zoom level at which to display map, if auto-adjust is disabled or if there is"
 " only one marker"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/configuration.py:61
+#: ./src/pyams_gis/interfaces/configuration.py:67
 msgid "Initial center"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/configuration.py:62
+#: ./src/pyams_gis/interfaces/configuration.py:68
 msgid "Initial map location center"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/configuration.py:65
+#: ./src/pyams_gis/interfaces/configuration.py:71
 msgid "Initial bounds"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/configuration.py:66
+#: ./src/pyams_gis/interfaces/configuration.py:72
 msgid ""
 "Initial map location bounds, if auto-adjust or initial center are disabled"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/configuration.py:70
+#: ./src/pyams_gis/interfaces/configuration.py:76
 msgid "Attribution control?"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/configuration.py:71
+#: ./src/pyams_gis/interfaces/configuration.py:77
 msgid "If 'yes', an attribution control is added to map"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/configuration.py:75
+#: ./src/pyams_gis/interfaces/configuration.py:81
 msgid "Zoom control?"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/configuration.py:76
+#: ./src/pyams_gis/interfaces/configuration.py:82
 msgid "If 'yes', a zoom control is added to map"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/configuration.py:80
+#: ./src/pyams_gis/interfaces/configuration.py:86
 msgid "Fullscreen control?"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/configuration.py:81
+#: ./src/pyams_gis/interfaces/configuration.py:87
 msgid "If 'yes', a fullscreen control is added to map"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/configuration.py:85
+#: ./src/pyams_gis/interfaces/configuration.py:91
 msgid "Layers control?"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/configuration.py:86
+#: ./src/pyams_gis/interfaces/configuration.py:92
 msgid "If 'yes', a layer selection control is added to map"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/configuration.py:90
+#: ./src/pyams_gis/interfaces/configuration.py:96
 msgid "Keyboard navigation?"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/configuration.py:91
+#: ./src/pyams_gis/interfaces/configuration.py:97
 msgid ""
 "If 'yes', makes the map focusable and allows users to navigate with keyboard "
 "arrows and +/- keys; this option will not be activated on mobile devices"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/configuration.py:97
+#: ./src/pyams_gis/interfaces/configuration.py:103
 msgid "Scroll wheel zoom?"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/configuration.py:98
+#: ./src/pyams_gis/interfaces/configuration.py:104
 msgid ""
 "If 'yes', the map can be zoomed using the mouse wheel; this should be avoided"
 " to get a good responsive behaviour and handle gestures"
@@ -431,81 +452,81 @@ msgid ""
 "admin home page"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/__init__.py:62
+#: ./src/pyams_gis/interfaces/__init__.py:64
 msgid "WGS84 (GPS)"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/__init__.py:63
+#: ./src/pyams_gis/interfaces/__init__.py:65
 msgid "WGS84 Web Mercator"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/__init__.py:64
+#: ./src/pyams_gis/interfaces/__init__.py:66
 msgid "Lambert 93 (Metropolitan France)"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/__init__.py:65
+#: ./src/pyams_gis/interfaces/__init__.py:67
 msgid "Extended Lambert II (Metropolitan France)"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/__init__.py:66
+#: ./src/pyams_gis/interfaces/__init__.py:68
 msgid "UTM Zone 20N (Martinique, Guadeloupe)"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/__init__.py:67
+#: ./src/pyams_gis/interfaces/__init__.py:69
 msgid "UTM Zone 22N (Guyane)"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/__init__.py:68
+#: ./src/pyams_gis/interfaces/__init__.py:70
 msgid "UTM Zone 38S (Mayotte)"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/__init__.py:69
+#: ./src/pyams_gis/interfaces/__init__.py:71
 msgid "UTM Zone 40S (La Réunion)"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/__init__.py:102
+#: ./src/pyams_gis/interfaces/__init__.py:104
 msgid "Longitude"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/__init__.py:105
+#: ./src/pyams_gis/interfaces/__init__.py:107
 msgid "Latitude"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/__init__.py:108
-#: ./src/pyams_gis/interfaces/__init__.py:149
+#: ./src/pyams_gis/interfaces/__init__.py:110
+#: ./src/pyams_gis/interfaces/__init__.py:152
 msgid "Projection system"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/__init__.py:117
+#: ./src/pyams_gis/interfaces/__init__.py:120
 msgid "You must set longitude and latitude, or None!"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/__init__.py:119
-#: ./src/pyams_gis/interfaces/__init__.py:160
+#: ./src/pyams_gis/interfaces/__init__.py:122
+#: ./src/pyams_gis/interfaces/__init__.py:164
 msgid "You can't set coordinates without setting projection!"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/__init__.py:130
+#: ./src/pyams_gis/interfaces/__init__.py:133
 msgid "Altitude"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/__init__.py:137
+#: ./src/pyams_gis/interfaces/__init__.py:140
 msgid "West limit"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/__init__.py:140
+#: ./src/pyams_gis/interfaces/__init__.py:143
 msgid "South limit"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/__init__.py:143
+#: ./src/pyams_gis/interfaces/__init__.py:146
 msgid "East limit"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/__init__.py:146
+#: ./src/pyams_gis/interfaces/__init__.py:149
 msgid "North limit"
 msgstr ""
 
-#: ./src/pyams_gis/interfaces/__init__.py:158
+#: ./src/pyams_gis/interfaces/__init__.py:162
 msgid "You must set all coordinates or None!"
 msgstr ""
 

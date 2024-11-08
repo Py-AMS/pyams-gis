@@ -63,20 +63,20 @@ The first API provided by PyAMS_gis is related to coordinates transformations:
 
 Points can be provided in several formats:
 
-    >>> pprint(transform((0.0, 90.0), 4326, 2154))
-    {'point': {'latitude': 7342679.450303347, 'longitude': 11185002.041692967},
+    >>> pprint(transform((0.0, 45.0), 4326, 2154))
+    {'point': {'latitude': 6437909.150772504, 'longitude': 463658.74294504523},
      'srid': 2154}
 
-    >>> pprint(transform([0.0, 90.0], 4326, 2154))
-    {'point': {'latitude': 7342679.450303347, 'longitude': 11185002.041692967},
+    >>> pprint(transform([0.0, 45.0], 4326, 2154))
+    {'point': {'latitude': 6437909.150772504, 'longitude': 463658.74294504523},
      'srid': 2154}
 
-    >>> pprint(transform({'longitude': 0.0, 'latitude': 90.0}, 4326, 2154))
-    {'point': {'latitude': 7342679.450303347, 'longitude': 11185002.041692967},
+    >>> pprint(transform({'longitude': 0.0, 'latitude': 45.0}, 4326, 2154))
+    {'point': {'latitude': 6437909.150772504, 'longitude': 463658.74294504523},
      'srid': 2154}
 
-    >>> pprint(transform({'longitude': 0.0, 'latitude': 90.0}, 4326, 4326))
-    {'point': {'latitude': 90.0, 'longitude': 0.0},
+    >>> pprint(transform({'longitude': 0.0, 'latitude': 45.0}, 4326, 4326))
+    {'point': {'latitude': 45.0, 'longitude': 0.0},
      'srid': 4326}
 
 
@@ -88,20 +88,20 @@ This transformation API is available as a REST API:
     >>> from pyams_gis.api import transform_point
 
     >>> request = DummyRequest(path='/api/gis/rest/transform/point', method='POST',
-    ...                        params={'point': {'longitude': 0.0, 'latitude': 90.0}, 'from_srid': 4326, 'to_srid': 2154})
+    ...                        params={'point': {'longitude': 0.0, 'latitude': 45.0}, 'from_srid': 4326, 'to_srid': 2154})
     >>> pprint(transform_point(request))
-    {'point': {'latitude': 7342679.450303347, 'longitude': 11185002.041692967},
+    {'point': {'latitude': 6437909.150772504, 'longitude': 463658.74294504523},
      'srid': 2154,
      'status': 'success'}
 
     >>> from pyams_gis.api import transform_area
     >>> request = DummyRequest(path='/api/gis/rest/transform/area', method='POST',
-    ...                        params={'area': {'x1': 0.0, 'y1': 90.0, 'x2': 0.1, 'y2': 90.1}, 'from_srid': 4326, 'to_srid': 2154})
+    ...                        params={'area': {'x1': 0.0, 'y1': 45.0, 'x2': 0.1, 'y2': 45.1}, 'from_srid': 4326, 'to_srid': 2154})
     >>> pprint(transform_area(request))
-    {'area': {'x1': 11185002.041692967,
-              'x2': 11178532.325169353,
-              'y1': 7342679.450303347,
-              'y2': 7362624.658507054},
+    {'area': {'x1': 463658.74294504523,
+              'x2': 471940.9845313107,
+              'y1': 6437909.150772504,
+              'y2': 6448713.677950852},
      'srid': 2154,
      'status': 'success'}
 
@@ -128,30 +128,30 @@ PyAMS_gis provides several custom schema fields which can to used to handle poin
 
     >>> test_instance = TestClass()
 
-    >>> point = GeoPoint(longitude=0.0, latitude=90.0)
+    >>> point = GeoPoint(longitude=0.0, latitude=45.0)
     >>> test_instance.point = point
     >>> bool(point)
     True
     >>> pprint(point.get_coordinates(projection=2154))
-    (11185002.041692967, 7342679.450303347)
+    {'latitude': 6437909.150772504, 'longitude': 463658.74294504523}
     >>> pprint(point.wgs_coordinates)
-    (Decimal('0'), Decimal('90'))
+    {'latitude': Decimal('45'), 'longitude': Decimal('0')}
     >>> pprint(point.to_json())
-    {'crs': 4326.0, 'lat': 90.0, 'lon': 0.0}
+    {'crs': 4326.0, 'lat': 45.0, 'lon': 0.0}
 
-    >>> area = GeoArea(x1=0.0, y1=90.0, x2=0.1, y2=90.1)
+    >>> area = GeoArea(x1=0.0, y1=45.0, x2=0.1, y2=45.1)
     >>> test_instance.area = area
     >>> bool(area)
     True
     >>> pprint(area.get_coordinates(projection=2154))
-    ((11185002.041692967, 7342679.450303347),
-     (11178532.325169353, 7362624.658507054))
+    ((463658.74294504523, 6437909.150772504),
+     (471940.9845313107, 6448713.677950852))
     >>> pprint(area.wgs_coordinates)
-    ((Decimal('0'), Decimal('90')),
+    ((Decimal('0'), Decimal('45')),
      (Decimal('0.1000000000000000055511151231257827021181583404541015625'),
-      Decimal('90.099999999999994315658113919198513031005859375')))
+      Decimal('45.10000000000000142108547152020037174224853515625')))
     >>> pprint(area.to_json())
-    {'crs': 4326, 'x1': 0.0, 'x2': 0.1, 'y1': 90.0, 'y2': 90.1}
+    {'crs': 4326, 'x1': 0.0, 'x2': 0.1, 'y1': 45.0, 'y2': 45.1}
 
 
 GIS maps configuration
@@ -313,7 +313,7 @@ GIS schema fields widgets
                    name="form.widgets.point.widgets.latitude"
                    class="text-widget dotteddecimalfield-field"
                    readonly="readonly"
-                   value="90" /></div>
+                   value="45" /></div>
             </div>
         </div>
         <div class="form-group widget-group row">
@@ -430,7 +430,7 @@ GIS schema fields widgets
                    name="form.widgets.area.widgets.y1"
                    class="text-widget dotteddecimalfield-field"
                    readonly="readonly"
-                   value="90" /></div>
+                   value="45" /></div>
                 </div>
             </div>
             <div class="form-group widget-group row">
@@ -458,7 +458,7 @@ GIS schema fields widgets
                    name="form.widgets.area.widgets.y2"
                    class="text-widget dotteddecimalfield-field"
                    readonly="readonly"
-                   value="90.100" /></div>
+                   value="45.100" /></div>
             </div>
         </div>
         <div class="form-group widget-group row">
