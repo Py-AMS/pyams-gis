@@ -177,6 +177,7 @@ PyAMS_gis allows you to define a default map configuration:
      'fullscreenControl': False,
      'keyboard': True,
      'layerControl': False,
+     'layers': [],
      'scrollWheelZoom': False,
      'zoom': 11,
      'zoomControl': True}
@@ -205,6 +206,7 @@ Let's add a layer to this default configuration:
      'layerControl': False,
      'layers': [{'factory': 'MyAMS.gis.factory.WMS',
                  'format': 'image/png',
+                 'isVisible': True,
                  'maxZoom': 18,
                  'name': 'wms',
                  'title': 'WMS',
