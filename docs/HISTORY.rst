@@ -1,6 +1,10 @@
 Changelog
 =========
 
+2.1.1
+-----
+ - corrected doctests
+
 2.1.0
 -----
  - added support for overlay vs base layers
