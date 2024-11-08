@@ -32,6 +32,7 @@ from pyams_utils.registry import get_utility, query_utility
 from pyams_utils.url import absolute_url
 from pyams_viewlet.manager import viewletmanager_config
 from pyams_viewlet.viewlet import viewlet_config
+from pyams_zmi.helper.container import delete_container_element
 from pyams_zmi.interfaces import IAdminLayer
 from pyams_zmi.interfaces.table import ITableElementEditor
 from pyams_zmi.interfaces.viewlet import IControlPanelMenu
@@ -179,4 +180,4 @@ class MapManagerLayersTrashColumn(TrashColumn):
              permission=MANAGE_MAPS_PERMISSION, renderer='json', xhr=True)
 def delete_map_layer(request):
     """Delete map layer"""
-    return delete_map_layer(request)
+    return delete_container_element(request)
