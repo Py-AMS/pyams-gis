@@ -1,6 +1,11 @@
 Changelog
 =========
 
+2.1.2
+-----
+ - updated layer delete request handler
+ - corrected doctests
+
 2.1.1
 -----
  - corrected doctests
