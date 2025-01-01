@@ -1,6 +1,10 @@
 Changelog
 =========
 
+2.1.3
+-----
+ - updated point JSON converter
+
 2.1.2
 -----
  - updated layer delete request handler
