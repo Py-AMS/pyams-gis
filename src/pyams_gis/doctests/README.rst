@@ -137,7 +137,7 @@ PyAMS_gis provides several custom schema fields which can to used to handle poin
     >>> pprint(point.wgs_coordinates)
     {'latitude': Decimal('45'), 'longitude': Decimal('0')}
     >>> pprint(point.to_json())
-    {'crs': 4326.0, 'lat': 45.0, 'lon': 0.0}
+    {'crs': 4326, 'lat': 45.0, 'lon': 0.0}
 
     >>> area = GeoArea(x1=0.0, y1=45.0, x2=0.1, y2=45.1)
     >>> test_instance.area = area

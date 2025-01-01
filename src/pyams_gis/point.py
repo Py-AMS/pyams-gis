@@ -66,7 +66,7 @@ class GeoPoint(Persistent):
         return {
             'lon': float(self.longitude),
             'lat': float(self.latitude),
-            'crs': float(self.projection)
+            'crs': self.projection
         }
 
 
