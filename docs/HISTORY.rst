@@ -1,6 +1,10 @@
 Changelog
 =========
 
+2.1.4
+-----
+ - added type converter for SRID schema type
+
 2.1.3
 -----
  - updated point JSON converter
