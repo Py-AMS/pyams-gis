@@ -9,6 +9,8 @@
 #
 
 from colander import MappingSchema, Decimal, Integer, SchemaNode, String
+from cornice_swagger import CorniceSwagger
+from cornice_swagger.converters.schema import IntegerTypeConverter
 
 __docformat__ = 'restructuredtext'
 
@@ -26,6 +28,15 @@ class Coordinate(MappingSchema):
 class SRID(Integer):
     """Spatial reference system identifier"""
     
+    
+class SRIDTypeConverter(IntegerTypeConverter):
+    """SRID Type converter"""
+    
+    
+CorniceSwagger.custom_type_converters.update({
+    SRID: SRIDTypeConverter
+})
+
     
 class GeoPoint(MappingSchema):
     """Geographic point schema"""
