@@ -19,6 +19,7 @@ from one SRID to another one.
 __docformat__ = 'restructuredtext'
 
 try:
+    from osgeo import gdal_version
     from osgeo.osr import CoordinateTransformation, OAMS_TRADITIONAL_GIS_ORDER, SpatialReference
     have_gdal = True
 except ImportError:
@@ -58,7 +59,11 @@ def transform(point, from_srid, to_srid):
     destination = SpatialReference()
     destination.SetAxisMappingStrategy(OAMS_TRADITIONAL_GIS_ORDER)
     destination.ImportFromEPSG(to_srid)
-    transformed = CoordinateTransformation(source, destination).TransformPoint(longitude, latitude)
+    transformer = CoordinateTransformation(source, destination)
+    if gdal_version[0] >= 3:
+        transformed = transformer.TransformPoint(latitude, longitude)
+    else:
+        transformed = transformer.TransformPoint(longitude, latitude)
     return {
         'point': {
             'longitude': transformed[0],
