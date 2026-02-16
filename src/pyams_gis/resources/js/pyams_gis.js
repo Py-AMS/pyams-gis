@@ -8,6 +8,77 @@ if (window.$ === undefined) {
 }
 
 
+/**
+ * Module constants
+ */
+
+const EARTH_RADIUS = 6371;
+
+
+/**
+ * Distance calculation between longitudes
+ */
+const getLonDistance = (lon1, lon2, latitude) => {
+	const dLon = (lon2 - lon1) * (Math.PI / 180);  // Longitude difference, in radians
+	const latRad = latitude * (Math.PI / 180);  // Latitude, in radians
+	return Math.abs(EARTH_RADIUS * Math.cos(latRad) * dLon);  // Distance, in km
+}
+
+/**
+ * Distance calculation between latitudes
+ */
+const getLatDistance = (lat1, lat2) => {
+	const dLat = (lat2 - lat1) * (Math.PI / 180);  // Latitude difference, in radians
+	return Math.abs(EARTH_RADIUS * dLat);  // Distance, in km
+}
+
+/**
+ * Bounds size calculation
+ */
+const getAreaSize = (bounds) => {
+	// Calculate extreme coordinates
+	const west = bounds.getWest();
+	const east = bounds.getEast();
+	const north = bounds.getNorth();
+	const south = bounds.getSouth();
+	// Calculate average latitude
+	const avgLatitude = (north + south) / 2;
+	// Return current distances, in km
+	return {
+		west: west,
+		east: east,
+		north: north,
+		south: south,
+		lonDist: getLonDistance(west, east, avgLatitude),
+		latDist: getLatDistance(south, north),
+		avgLat: avgLatitude
+	}
+}
+
+/**
+ * Get bounds adjusted for a minimal distance given in km
+ */
+const getAdjustedBounds = (bounds, distance) => {
+	const size = getAreaSize(bounds);
+	if ((size.lonDist < distance) || (size.latDist < distance)) {
+		// check longitude
+		const deltaLon = (distance / (EARTH_RADIUS * Math.cos(size.avgLat * (Math.PI / 180)))) * (180 / Math.PI);
+		const centerLon = (size.west + size.east) / 2;
+		const west = centerLon - (deltaLon / 2);
+		const east = centerLon + (deltaLon / 2);
+		// check latitude
+		const deltaLat = (distance / EARTH_RADIUS) * (180 / Math.PI);
+		const centerLat = (size.north + size.south) / 2;
+		const south = centerLat - (deltaLat / 2);
+		const north = centerLat + (deltaLat / 2);
+		// get adjusted bounds
+		return new L.latLngBounds([south, west], [north, east]);
+	} else {
+		return null;
+	}
+}
+
+
 const GIS = {
 
 	L: null,
@@ -143,6 +214,12 @@ const GIS = {
 										config.zoom || 13);
 								} else if (config.bounds) {
 									leafmap.fitBounds(config.bounds);
+									if (config.minAreaSize) {
+										const newBounds = getAdjustedBounds(leafmap.getBounds(), config.minAreaSize);
+										if (newBounds !== null) {
+											leafmap.fitBounds(newBounds);
+										}
+									}
 								}
 								map.data('leafmap', leafmap);
 								map.data('leafmap.config', config);
@@ -332,7 +409,8 @@ const GIS = {
 								data = map.data(),
 								leafmap = map.data('leafmap'),
 								config = map.data('leafmap.config'),
-								markers = data.mapMarkers;
+								markers = data.mapMarkers,
+								markersIcons = [];
 
 							let markerIcon,
 								activeIcon;
@@ -359,16 +437,21 @@ const GIS = {
 							// hide tooltip
 							function leaveMarker(evt) {
 								this.closePopup();
-								this.setIcon(markerIcon);
+								this.setIcon(markersIcons[this.options.markerId]);
 								const marker = $(`[id="marker-${this.options.markerId}"]`);
 								if (marker.exists()) {
 									marker.removeClass(marker.data('ams-active-class') || 'active');
 								}
 							}
+							
 
 							// click marker
 							function clickMarker(e) {
-								window.location.href = this.options.clickURL;
+								if (data.mapLinksTarget) {
+									window.open(this.options.clickURL, data.mapLinksTarget);
+								} else {
+									window.location.href = this.options.clickURL;
+								}
 							}
 
 							if (markers) {
@@ -414,8 +497,21 @@ const GIS = {
 									const
 										markerConfig = markers.markers[idx],
 										latLng = new L.LatLng(markerConfig.point.y, markerConfig.point.x),
+										iconConfig = markerConfig.icon;
+									let icon;
+									if (iconConfig) {
+										icon = L.icon({
+											iconUrl: iconConfig.url,
+											iconSize: iconConfig.size,
+											iconAnchor: iconConfig.anchor
+										});
+									} else {
+										icon = markerIcon;
+									}
+									markersIcons[markerConfig.id] = icon;
+									const
 										marker = new L.Marker(latLng, {
-											icon: markerIcon,
+											icon: icon,
 											clickURL: markerConfig.href,
 											markerId: markerConfig.id,
 											alt: markerConfig.id
