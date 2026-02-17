@@ -1,6 +1,11 @@
 Changelog
 =========
 
+2.2.0
+-----
+ - updated coordinates transformer to check for GDAL version
+ - added support for data attributes to scale map to a minimum area size
+
 2.1.4
 -----
  - added type converter for SRID schema type
