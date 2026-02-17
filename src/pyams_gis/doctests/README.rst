@@ -64,15 +64,15 @@ The first API provided by PyAMS_gis is related to coordinates transformations:
 Points can be provided in several formats:
 
     >>> pprint(transform((0.0, 45.0), 4326, 2154))
-    {'point': {'latitude': 6437909.150772504, 'longitude': 463658.74294504523},
+    {'point': {'latitude': 2525255.478098089, 'longitude': 6661408.923278427},
      'srid': 2154}
 
     >>> pprint(transform([0.0, 45.0], 4326, 2154))
-    {'point': {'latitude': 6437909.150772504, 'longitude': 463658.74294504523},
+    {'point': {'latitude': 2525255.478098089, 'longitude': 6661408.923278427},
      'srid': 2154}
 
     >>> pprint(transform({'longitude': 0.0, 'latitude': 45.0}, 4326, 2154))
-    {'point': {'latitude': 6437909.150772504, 'longitude': 463658.74294504523},
+    {'point': {'latitude': 2525255.478098089, 'longitude': 6661408.923278427},
      'srid': 2154}
 
     >>> pprint(transform({'longitude': 0.0, 'latitude': 45.0}, 4326, 4326))
@@ -90,7 +90,7 @@ This transformation API is available as a REST API:
     >>> request = DummyRequest(path='/api/gis/rest/transform/point', method='POST',
     ...                        params={'point': {'longitude': 0.0, 'latitude': 45.0}, 'from_srid': 4326, 'to_srid': 2154})
     >>> pprint(transform_point(request))
-    {'point': {'latitude': 6437909.150772504, 'longitude': 463658.74294504523},
+    {'point': {'latitude': 2525255.478098089, 'longitude': 6661408.923278427},
      'srid': 2154,
      'status': 'success'}
 
@@ -98,10 +98,10 @@ This transformation API is available as a REST API:
     >>> request = DummyRequest(path='/api/gis/rest/transform/area', method='POST',
     ...                        params={'area': {'x1': 0.0, 'y1': 45.0, 'x2': 0.1, 'y2': 45.1}, 'from_srid': 4326, 'to_srid': 2154})
     >>> pprint(transform_area(request))
-    {'area': {'x1': 463658.74294504523,
-              'x2': 471940.9845313107,
-              'y1': 6437909.150772504,
-              'y2': 6448713.677950852},
+    {'area': {'x1': 6661408.923278427,
+              'x2': 6666722.925420021,
+              'y1': 2525255.478098089,
+              'y2': 2545539.2140316954},
      'srid': 2154,
      'status': 'success'}
 
@@ -133,7 +133,7 @@ PyAMS_gis provides several custom schema fields which can to used to handle poin
     >>> bool(point)
     True
     >>> pprint(point.get_coordinates(projection=2154))
-    {'latitude': 6437909.150772504, 'longitude': 463658.74294504523}
+    {'latitude': 2525255.478098089, 'longitude': 6661408.923278427}
     >>> pprint(point.wgs_coordinates)
     {'latitude': Decimal('45'), 'longitude': Decimal('0')}
     >>> pprint(point.to_json())
@@ -144,8 +144,8 @@ PyAMS_gis provides several custom schema fields which can to used to handle poin
     >>> bool(area)
     True
     >>> pprint(area.get_coordinates(projection=2154))
-    ((463658.74294504523, 6437909.150772504),
-     (471940.9845313107, 6448713.677950852))
+    ((6661408.923278427, 2525255.478098089),
+     (6666722.925420021, 2545539.2140316954))
     >>> pprint(area.wgs_coordinates)
     ((Decimal('0'), Decimal('45')),
      (Decimal('0.1000000000000000055511151231257827021181583404541015625'),
